@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PHT - Tốc độ phản ứng và chất xúc tác</title>
+<style>
+:root{--ink:#18243b;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--purple:#7c3aed;--green:#15803d;--red:#b91c1c}
+*{box-sizing:border-box}body{margin:0;background:#f3f6fb;color:var(--ink);font:16px/1.55 Roboto,"Segoe UI",Arial,sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:22px}.hero{background:linear-gradient(120deg,#1676df,#4f46e5,#7c3aed);color:white;border-radius:22px;padding:28px;box-shadow:0 12px 30px #253e8b24}
+.hero h1{font-size:clamp(24px,4vw,36px);margin:0 0 8px}.hero p{margin:0;opacity:.93}.identity{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-top:20px}.identity label,.field label{display:block;font-weight:650;font-size:14px;margin-bottom:5px}.identity input{width:100%;padding:11px;border:1px solid #ffffff80;border-radius:10px;background:#ffffffed;color:#18243b}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.btn{border:0;border-radius:11px;padding:11px 16px;font-weight:750;cursor:pointer;transition:.15s}.btn:hover{filter:brightness(.96);transform:translateY(-1px)}.primary{background:#2563eb;color:white}.secondary{background:#e0e7ff;color:#3730a3}.dark{background:#172554;color:white}.light{background:white;border:1px solid var(--line);color:var(--ink)}
+.intro,.section,.admin,.result,.memory{background:white;border:1px solid var(--line);border-radius:18px;padding:22px;margin:16px 0;box-shadow:0 5px 18px #17255409}.intro h2,.section h2,.admin h2,.memory h2{margin:0 0 12px;font-size:21px}.intro ul{margin:0;padding-left:22px}.section{border-top:5px solid var(--accent,#2563eb)}.section h2{display:flex;gap:9px;align-items:center}.section .sub{color:var(--muted);margin-top:-5px}.q{padding:15px 0;border-bottom:1px solid #edf0f5}.q:last-child{border-bottom:0}.q-title{font-weight:700;margin-bottom:9px}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;padding:9px 11px;border:1px solid var(--line);border-radius:10px;cursor:pointer}.option:hover{background:#f8fafc}.option input{margin-top:5px}.fill-select, .short-answer, select,textarea,input[type=text],input[type=number],input[type=url],input[type=password]{font:inherit;border:1px solid #cbd5e1;border-radius:9px;padding:9px 10px;background:#fff;max-width:100%}.fill-select{margin:0 4px}.feedback{font-size:14px;font-weight:700;margin-top:7px}.correct{background:#dcfce7!important;border-color:#22c55e!important}.wrong{background:#fee2e2!important;border-color:#ef4444!important}.unanswered{color:#92400e}.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.match-item{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fafcff}.match-item select{width:100%;margin-top:8px}.image-board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.image-card{border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;background:#fbfdff}.image-card img{width:100%;height:135px;object-fit:contain;background:white;border-radius:9px;margin:6px 0}.image-card .drop{border:2px dashed #94a3b8;border-radius:10px;padding:12px;min-height:48px;background:#f8fafc}.image-card .drop.selected{border-color:#4f46e5;background:#eef2ff}.image-card .drop.over{background:#dbeafe;border-color:#2563eb}.image-pick{cursor:grab;border:2px solid transparent;border-radius:10px;padding:5px}.image-pick.chosen{border-color:#4f46e5;background:#eef2ff}.video-box video{width:100%;max-height:400px;background:#0f172a;border-radius:12px}.video-controls{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.field{margin:10px 0}.field input,.field textarea,.field select{width:100%}.admin{border:2px solid #c4b5fd}.admin details{margin-top:12px}.admin summary{font-weight:800;cursor:pointer}.admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.config-row{display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:10px;align-items:end;padding:10px 0;border-bottom:1px solid var(--line)}.notice{padding:10px 12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;color:#9a3412}.result{display:none;text-align:center;border:2px solid #93c5fd;background:#eff6ff}.score{font-size:clamp(30px,6vw,48px);font-weight:900;color:#1d4ed8}.memory{background:#f0fdf4;border-color:#bbf7d0}.memory li{margin:6px 0}.hidden{display:none!important}.small{font-size:13px;color:var(--muted)}footer{text-align:center;color:var(--muted);padding:15px}
+@media(max-width:680px){.wrap{padding:12px}.hero{padding:20px}.identity,.match-grid,.admin-grid{grid-template-columns:1fr}.image-board{grid-template-columns:1fr}.config-row{grid-template-columns:1fr 1fr}.config-row .config-name{grid-column:1/-1}.section,.intro,.admin,.memory{padding:16px}}
+</style></head>
+<body><main class="wrap">
+<header class="hero"><h1>PHIẾU HỌC TẬP TƯƠNG TÁC</h1><p id="heroLesson">TỐC ĐỘ PHẢN ỨNG VÀ CHẤT XÚC TÁC</p><div class="identity">
+<div><label for="studentName">Họ và tên học sinh</label><input id="studentName" type="text" placeholder="Nhập họ và tên của em"></div>
+<div><label for="studentClass">Lớp</label><input id="studentClass" type="text" placeholder="Ví dụ: 8A1"></div>
+</div></header>
+<div class="toolbar"><button class="btn secondary" id="adminOpen">⚙️ QUẢN TRỊ</button><button class="btn light" id="resetBtn">Làm lại phiếu</button></div>
+<section class="intro"><h2>🎯 Mục tiêu & hướng dẫn</h2><ul><li>Nêu được khái niệm tốc độ phản ứng hóa học.</li><li>Nhận biết các yếu tố ảnh hưởng đến tốc độ phản ứng và ứng dụng thực tế.</li><li>Hiểu vai trò của chất xúc tác và đặc điểm của chất xúc tác sau phản ứng.</li><li>Chọn đáp án, điền từ, nối cột và thực hiện hoạt động hình ảnh/video.</li><li>Hoàn thành các phần rồi nhấn <b>NỘP BÀI & CHẤM ĐIỂM</b> để xem kết quả.</li></ul></section>
+<div id="content"></div>
+<section class="result" id="result"><h2>ĐIỂM CỦA EM</h2><div class="score" id="scoreText">0 / 10</div><p id="resultMsg"></p><div id="scoreBreakdown"></div></section>
+<section class="memory"><h2>⚡ GHI NHỚ SIÊU NHANH</h2><ul><li>Tốc độ phản ứng là đại lượng đặc trưng cho sự nhanh, chậm của phản ứng hóa học.</li><li>Tốc độ phản ứng có thể so sánh qua sự thay đổi thể tích khí, khối lượng chất rắn hoặc nồng độ chất tan trong một khoảng thời gian.</li><li>Tăng nồng độ, tăng nhiệt độ hoặc tăng diện tích bề mặt tiếp xúc thường làm tăng tốc độ phản ứng.</li><li>Chất xúc tác làm tăng tốc độ phản ứng; sau phản ứng, khối lượng và tính chất hóa học của chất xúc tác không đổi.</li><li>Ứng dụng: đập nhỏ đá vôi khi nung, bảo quản thực phẩm trong tủ lạnh, dùng chất xúc tác trong sản xuất hóa chất.</li><li>Ví dụ chất xúc tác trong bài: manganese dioxide (MnO₂), enzyme amylase và vanadium(V) oxide.</li></ul></section>
+<footer>Phiếu học tập HTML độc lập • Có thể mở trực tiếp bằng Chrome hoặc Edge</footer>
+</main>
+<script>
+const DEFAULTS={
+ lesson:"TỐC ĐỘ PHẢN ỨNG VÀ CHẤT XÚC TÁC", subject:"KHOA HỌC TỰ NHIÊN", grade:"8",
+ content:"Tốc độ phản ứng là đại lượng đặc trưng cho sự nhanh, chậm của phản ứng hóa học. Các yếu tố ảnh hưởng gồm nồng độ, nhiệt độ, diện tích bề mặt tiếp xúc và chất xúc tác. Chất xúc tác làm tăng tốc độ phản ứng nhưng sau phản ứng vẫn giữ nguyên khối lượng và tính chất hóa học.",
+ total:10,
+ sections:{
+  mc:{label:"Trắc nghiệm nhanh",enabled:true,count:5,points:5,color:"#2563eb"},
+  fill:{label:"Điền khuyết",enabled:true,count:2,points:1,color:"#0891b2"},
+  tf:{label:"Đúng/Sai",enabled:true,count:4,points:1,color:"#7c3aed"},
+  match:{label:"Nối cột",enabled:true,count:4,points:1,color:"#d97706"},
+  image:{label:"Kéo thả hình ảnh",enabled:true,count:4,points:1,color:"#059669"},
+  video:{label:"Xem video + điền khuyết",enabled:true,count:1,points:1,color:"#db2777"}
+ },
+ videoUrl:"",
+ videoData:"",
+ images:{},
+ mc:[
+ ["Tốc độ phản ứng là đại lượng đặc trưng cho điều gì?",["Mức độ tỏa nhiệt của phản ứng","Sự nhanh hay chậm của phản ứng hóa học","Khối lượng sản phẩm tạo thành","Màu sắc của chất tham gia"],1],
+ ["Trong hai phản ứng được nêu, phản ứng nào thường xảy ra nhanh hơn?",["Sắt bị gỉ trong không khí ẩm","Đốt cháy cồn","Cả hai luôn có tốc độ bằng nhau","Không thể so sánh trong mọi trường hợp"],1],
+ ["Cho cùng lượng đá vôi dạng bột và dạng viên tác dụng với cùng dung dịch HCl. Trường hợp nào thường phản ứng nhanh hơn?",["Đá vôi dạng viên vì nặng hơn","Hai trường hợp bằng nhau","Đá vôi dạng bột vì có diện tích bề mặt tiếp xúc lớn hơn","Đá vôi dạng bột vì làm giảm nhiệt độ"],2],
+ ["Khi cho đinh sắt vào dung dịch HCl 1 M và HCl 0,1 M trong điều kiện tương tự, phản ứng nào thường nhanh hơn?",["Trong HCl 0,1 M","Hai phản ứng luôn bằng nhau","Không có phản ứng nào xảy ra","Trong HCl 1 M"],3],
+ ["Vai trò của MnO₂ trong phản ứng phân hủy H₂O₂ là gì?",["Chất xúc tác làm tăng tốc độ phản ứng","Chất phản ứng bị tiêu hao hoàn toàn","Sản phẩm khí của phản ứng","Chất làm giảm diện tích tiếp xúc"],0],
+ ["Để viên C sủi phản ứng nhanh hơn trong hai cốc nước có nhiệt độ khác nhau, nên chọn cốc nào?",["Cốc nước lạnh","Cốc nước nóng","Hai cốc luôn giống nhau","Cốc không có nước"],1],
+ ["Bảo quản thực phẩm trong tủ lạnh chủ yếu tác động vào yếu tố nào để làm chậm các phản ứng?",["Diện tích bề mặt","Nồng độ chất tan","Nhiệt độ","Chất xúc tác"],2],
+ ["Trong một phản ứng tạo khí, dấu hiệu nào có thể dùng để so sánh tốc độ phản ứng?",["Màu sắc của bàn thí nghiệm","Hình dạng ống nghiệm","Tên người làm thí nghiệm","Tốc độ thoát khí"],3]
+ ],
+ fill:[
+ ["Tốc độ phản ứng là đại lượng đặc trưng cho sự {{0}} hay {{1}} của phản ứng hóa học.",["nhanh","chậm"],["nhanh","chậm"]],
+ ["Khi tăng nhiệt độ, nồng độ hoặc diện tích bề mặt tiếp xúc, tốc độ phản ứng thường {{0}}.",["tăng","giảm","không đổi"],["tăng","tăng"]]
+ ],
+ tf:[
+ ["Tốc độ phản ứng cho biết phản ứng hóa học xảy ra nhanh hay chậm.",true],
+ ["Tăng nhiệt độ thường làm tốc độ phản ứng tăng lên.",true],
+ ["Đá vôi dạng viên có diện tích bề mặt tiếp xúc lớn hơn đá vôi dạng bột cùng khối lượng.",false],
+ ["Sau phản ứng, chất xúc tác luôn bị tiêu hao hoàn toàn.",false],
+ ["Bảo quản thực phẩm trong tủ lạnh là ứng dụng làm chậm tốc độ phản ứng.",true],
+ ["MnO₂ có thể làm tăng tốc độ phân hủy H₂O₂.",true]
+ ],
+ match:[
+ ["Nồng độ chất tham gia","Tăng nồng độ thường làm phản ứng nhanh hơn"],
+ ["Nhiệt độ","Tăng nhiệt độ thường làm phản ứng nhanh hơn"],
+ ["Diện tích bề mặt tiếp xúc","Chất rắn được nghiền nhỏ thường phản ứng nhanh hơn"],
+ ["Chất xúc tác","Làm tăng tốc độ phản ứng và vẫn giữ nguyên sau phản ứng"],
+ ["Bảo quản trong tủ lạnh","Ứng dụng làm chậm tốc độ phản ứng"],
+ ["MnO₂","Chất xúc tác cho phản ứng phân hủy H₂O₂"]
+ ],
+ images:[
+ {id:"powder",label:"Đá vôi dạng bột",match:"powder",emoji:"🪨",desc:"Hạt nhỏ, diện tích tiếp xúc lớn"},
+ {id:"cold",label:"Cốc nước lạnh",match:"cold",emoji:"🧊",desc:"Nhiệt độ thấp"},
+ {id:"hot",label:"Cốc nước nóng",match:"hot",emoji:"♨️",desc:"Nhiệt độ cao"},
+ {id:"catalyst",label:"Bột MnO₂",match:"catalyst",emoji:"⚫",desc:"Chất xúc tác"}
+ ],
+ videoQuestions:[["Khi nhiệt độ tăng, tốc độ phản ứng thường {{0}}.",["tăng","giảm","không đổi"],"tăng"]]
+};
+let cfg, selectedImage=null, submitted=false, localVideoUrl="";
+const $=id=>document.getElementById(id);
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function loadCfg(){try{const x=localStorage.getItem("pht_toc_do_phan_ung_cfg");return x?Object.assign(clone(DEFAULTS),JSON.parse(x)):clone(DEFAULTS)}catch(e){return clone(DEFAULTS)}}
+cfg=loadCfg();
+function saveCfg(){try{localStorage.setItem("pht_toc_do_phan_ung_cfg",JSON.stringify(cfg));return true}catch(e){return false}}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function sectionShell(key,icon,inner){let s=cfg.sections[key];if(!s.enabled)return "";return `<section class="section" id="sec-${key}" style="--accent:${s.color}"><h2>${icon} ${esc(s.label)}</h2><p class="sub">${s.count} câu • tối đa ${s.points} điểm</p>${inner}</section>`}
+function render(){
+ $("heroLesson").textContent=cfg.lesson;
+ let out="";
+ const mc=cfg.mc.slice(0,cfg.sections.mc.count).map((q,i)=>`<div class="q" data-kind="mc" data-q="${i}"><div class="q-title">${i+1}. ${esc(q[0])}</div><div class="options">${q[1].map((o,j)=>`<label class="option"><input type="radio" name="mc-${i}" value="${j}"><span><b>${"ABCD"[j]}.</b> ${esc(o)}</span></label>`).join("")}</div><div class="feedback" id="fb-mc-${i}"></div></div>`).join("");
+ out+=sectionShell("mc","🧠",mc);
+ const fills=cfg.fill.slice(0,cfg.sections.fill.count).map((q,i)=>`<div class="q" data-kind="fill" data-q="${i}"><div class="q-title">${i+1}. ${esc(q[0]).replace(/\{\{(\d+)\}\}/g,(_,n)=>`<select class="fill-select" name="fill-${i}-${n}"><option value="">-- chọn từ --</option>${q[1].map(a=>`<option>${esc(a)}</option>`).join("")}</select>`)}</div><div class="feedback" id="fb-fill-${i}"></div></div>`).join("");
+ out+=sectionShell("fill","✍️",fills);
+ const tfs=cfg.tf.slice(0,cfg.sections.tf.count).map((q,i)=>`<div class="q" data-kind="tf" data-q="${i}"><div class="q-title">${i+1}. ${esc(q[0])}</div><div class="options"><label class="option"><input type="radio" name="tf-${i}" value="true"> Đúng</label><label class="option"><input type="radio" name="tf-${i}" value="false"> Sai</label></div><div class="feedback" id="fb-tf-${i}"></div></div>`).join("");
+ out+=sectionShell("tf","☑️",tfs);
+ const matches=cfg.match.slice(0,cfg.sections.match.count), rightOpts=matches.map(x=>x[1]);
+ out+=sectionShell("match","🔗",matches.map((q,i)=>`<div class="q" data-kind="match" data-q="${i}"><div class="q-title">${i+1}. ${esc(q[0])}</div><select name="match-${i}"><option value="">-- Chọn nội dung tương ứng --</option>${rightOpts.map((o,j)=>`<option value="${j}">${String.fromCharCode(65+j)}. ${esc(o)}</option>`).join("")}</select><div class="feedback" id="fb-match-${i}"></div></div>`).join(""));
+ const ims=cfg.images.slice(0,cfg.sections.image.count);
+ out+=sectionShell("image","🖼️",`<p>Chọn một hình rồi bấm vào ô tương ứng, hoặc kéo hình vào ô đáp án. Giáo viên có thể thay hình trong mục Quản trị.</p><div class="image-board" id="imageBoard">${ims.map((im,i)=>`<div class="image-card"><div class="image-pick" draggable="true" tabindex="0" role="button" data-image="${esc(im.id)}" aria-label="Chọn ${esc(im.label)}"><b>${esc(im.label)}</b><img id="img-${esc(im.id)}" src="${cfg.images[i].src||""}" alt="${esc(im.label)}" onerror="this.style.display='none'"><div style="font-size:30px" class="emoji-fallback">${esc(im.emoji||"🧪")}</div><div class="small">${esc(im.desc||"")}</div></div><div class="drop" data-drop="${esc(im.id)}" tabindex="0">Thả hình vào đây hoặc bấm để chọn</div><div class="feedback" id="fb-image-${esc(im.id)}"></div></div>`).join("")}</div>`);
+ const vq=cfg.videoQuestions.slice(0,cfg.sections.video.count).map((q,i)=>`<div class="q" data-kind="video" data-q="${i}"><div class="q-title">${i+1}. ${esc(q[0]).replace(/\{\{(\d+)\}\}/g,(_,n)=>`<input class="short-answer" type="text" name="video-${i}-${n}" placeholder="Điền từ còn thiếu">`)}</div><div class="feedback" id="fb-video-${i}"></div></div>`).join("");
+ let videoSrc=cfg.videoData||cfg.videoUrl||"";
+ out+=sectionShell("video","🎬",`<div class="video-box">${videoSrc?`<video id="lessonVideo" controls preload="metadata" src="${esc(videoSrc)}"></video>`:`<div class="notice">Giáo viên chưa cài video. Em vẫn có thể làm câu hỏi dựa trên kiến thức bài học.</div>`}</div><div style="margin-top:12px">${vq}</div>`);
+ $("content").innerHTML=out;
+ if(submitted) submitted=false;
+ setupImageInteraction();
+}
+function setupImageInteraction(){
+ document.querySelectorAll(".image-pick").forEach(el=>{
+  el.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",el.dataset.image);selectedImage=el.dataset.image});
+  el.addEventListener("click",()=>{document.querySelectorAll(".image-pick").forEach(x=>x.classList.remove("chosen"));el.classList.add("chosen");selectedImage=el.dataset.image});
+  el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();el.click()}});
+ });
+ document.querySelectorAll(".drop").forEach(el=>{
+  el.addEventListener("dragover",e=>{e.preventDefault();el.classList.add("over")});
+  el.addEventListener("dragleave",()=>el.classList.remove("over"));
+  el.addEventListener("drop",e=>{e.preventDefault();el.classList.remove("over");placeImage(e.dataTransfer.getData("text/plain"),el.dataset.drop)});
+  el.addEventListener("click",()=>{if(selectedImage)placeImage(selectedImage,el.dataset.drop);else el.textContent="Hãy bấm chọn một hình trước"});
+ });
+}
+function placeImage(imageId,dropId){const d=document.querySelector(`[data-drop="${CSS.escape(dropId)}"]`);if(!d)return;d.dataset.answer=imageId;d.textContent="Đã chọn: "+(cfg.images.find(x=>x.id===imageId)?.label||imageId);d.classList.add("selected");}
+function grade(){
+ submitted=true;let total=0,breakdown=[];
+ Object.entries(cfg.sections).forEach(([key,s])=>{
+  if(!s.enabled)return;
+  let count=Math.max(0,Math.min(Number(s.count)||0, cfg[key==="video"?"videoQuestions":key==="image"?"images":key==="mc"?"mc":key==="fill"?"fill":key==="tf"?"tf":"match"].length));
+  if(!count)return;
+  let correct=0;
+  for(let i=0;i<count;i++){
+   let ok=false, answered=false, feedback="";
+   if(key==="mc"){let chosen=document.querySelector(`input[name="mc-${i}"]:checked`);answered=!!chosen;ok=answered&&Number(chosen.value)===cfg.mc[i][2];feedback=ok?"✓ Chính xác":answered?`✗ Đáp án đúng: ${"ABCD"[cfg.mc[i][2]]}. ${cfg.mc[i][1][cfg.mc[i][2]]}`:"Chưa trả lời."}
+   if(key==="fill"){const q=cfg.fill[i], inputs=[...document.querySelectorAll(`[name^="fill-${i}-"]`)];answered=inputs.length>0&&inputs.every(x=>x.value!=="");ok=answered&&inputs.every((x,j)=>norm(x.value)===norm(q[2][j]));feedback=ok?"✓ Chính xác":answered?`✗ Đáp án: ${q[2].join("; ")}`:"Chưa trả lời."}
+   if(key==="tf"){let chosen=document.querySelector(`input[name="tf-${i}"]:checked`);answered=!!chosen;ok=answered&&(chosen.value==="true")===cfg.tf[i][1];feedback=ok?"✓ Chính xác":answered?`✗ Đáp án đúng: ${cfg.tf[i][1]?"Đúng":"Sai"}`:"Chưa trả lời."}
+   if(key==="match"){let el=document.querySelector(`[name="match-${i}"]`);answered=!!el&&el.value!=="";ok=answered&&Number(el.value)===cfg.match.findIndex(x=>x[0]===cfg.match[i][0]);feedback=ok?"✓ Ghép đúng":answered?`✗ Đáp án đúng: ${cfg.match[i][1]}`:"Chưa trả lời."}
+   if(key==="image"){let im=cfg.images[i],el=document.querySelector(`[data-drop="${CSS.escape(im.id)}"]`);answered=!!el?.dataset.answer;ok=answered&&el.dataset.answer===im.match;feedback=ok?"✓ Đúng hình":answered?`✗ Đáp án đúng: ${im.label}`:"Chưa trả lời.";if(el)el.classList.add(ok?"correct":answered?"wrong":"");}
+   if(key==="video"){let q=cfg.videoQuestions[i],inputs=[...document.querySelectorAll(`[name^="video-${i}-"]`)];answered=inputs.length>0&&inputs.every(x=>x.value.trim()!=="");ok=answered&&inputs.every((x,j)=>norm(x.value)===norm(q[2]));feedback=ok?"✓ Chính xác":answered?`✗ Đáp án: ${q[2]}`:"Chưa trả lời."}
+   if(ok)correct++;
+   const fb=$(`fb-${key}-${i}`);if(fb){fb.textContent=feedback;fb.className="feedback "+(ok?"correct":answered?"wrong":"unanswered");}
+   const qEl=document.querySelector(`.q[data-kind="${key}"][data-q="${i}"]`);
+   if(qEl){qEl.querySelectorAll(".option").forEach(o=>{let inp=o.querySelector("input");if(inp&&inp.checked){if((key==="mc"&&Number(inp.value)===cfg.mc[i][2])||(key==="tf"&&((inp.value==="true")===cfg.tf[i][1])))o.classList.add("correct");else o.classList.add("wrong")}});if(key==="match"){let el=qEl.querySelector("select");if(el)el.classList.add(ok?"correct":answered?"wrong":"")};if(key==="fill"||key==="video")qEl.querySelectorAll("select,input").forEach(x=>x.classList.add(ok?"correct":answered?"wrong":""));}
+  }
+  let pts=correct/count*(Number(s.points)||0);total+=pts;breakdown.push(`<div>${esc(s.label)}: <b>${fmt(pts)} / ${fmt(Number(s.points)||0)}</b> (${correct}/${count} câu đúng)</div>`);
+ });
+ $("result").style.display="block";$("scoreText").textContent=`${fmt(total)} / ${fmt(Number(cfg.total)||0)}`;$("resultMsg").textContent=`${$("studentName").value.trim()||"Em"}${$("studentClass").value.trim()?" • Lớp "+$("studentClass").value.trim():""} — Hoàn thành chấm điểm.`;$("scoreBreakdown").innerHTML=breakdown.join("");$("result").scrollIntoView({behavior:"smooth",block:"center"});
+}
+function norm(s){return String(s??"").trim().toLocaleLowerCase("vi").normalize("NFC").replace(/\s+/g," ")}
+function fmt(n){return (Math.round((Number(n)||0)*100)/100).toLocaleString("vi-VN",{maximumFractionDigits:2})}
+function openAdmin(){
+ const pass=prompt("Nhập mật khẩu quản trị:");
+ if(pass!=="1230"){if(pass!==null)alert("Mật khẩu không đúng.");return}
+ let old=$("adminPanel");if(old){old.remove();return}
+ let panel=document.createElement("section");panel.id="adminPanel";panel.className="admin";
+ panel.innerHTML=`<h2>⚙️ QUẢN TRỊ GIÁO VIÊN</h2><p class="small">Cấu hình được lưu trong trình duyệt này khi dung lượng cho phép. Nội dung file video lớn nên ưu tiên dùng URL video.</p>
+ <div class="admin-grid"><div class="field"><label>Tên bài học</label><input id="aLesson" value="${esc(cfg.lesson)}"></div><div class="field"><label>Môn học</label><input id="aSubject" value="${esc(cfg.subject)}"></div><div class="field"><label>Khối lớp</label><input id="aGrade" value="${esc(cfg.grade)}"></div><div class="field"><label>Tổng điểm toàn phiếu</label><input id="aTotal" type="number" min="0" step=".25" value="${cfg.total}"></div></div>
+ <div class="field"><label>Nội dung bài học</label><textarea id="aContent" rows="4">${esc(cfg.content)}</textarea></div>
+ <h3>Cấu hình từng khu vực</h3><div id="configRows">${Object.entries(cfg.sections).map(([k,s])=>`<div class="config-row"><div class="config-name"><label><input type="checkbox" id="en-${k}" ${s.enabled?"checked":""}> ${esc(s.label)}</label></div><div class="field"><label>Số câu</label><input type="number" min="0" max="20" id="count-${k}" value="${s.count}"></div><div class="field"><label>Điểm tối đa</label><input type="number" min="0" step=".25" id="points-${k}" value="${s.points}"></div></div>`).join("")}</div>
+ <h3>Video bài học</h3><div class="field"><label>URL video (mp4/webm hoặc URL video trực tiếp)</label><input id="aVideoUrl" type="url" value="${esc(cfg.videoUrl)}" placeholder="https://..."></div><div class="field"><label>Hoặc chọn video từ máy</label><input id="aVideoFile" type="file" accept="video/*"></div><div id="videoPreview" class="small">${cfg.videoData?"Đã có video tải lên được lưu trong phiên trước (nếu còn dung lượng).":""}</div>
+ <h3>Ảnh minh họa kéo thả</h3><div id="imageAdmin">${cfg.images.map(im=>`<div class="field"><label>${esc(im.label)} — tải ảnh thay thế</label><input type="file" accept="image/*" data-upload-image="${esc(im.id)}"><div class="small" id="preview-${esc(im.id)}">${im.src?"Đã có ảnh tùy chỉnh.":"Đang dùng biểu tượng minh họa."}</div></div>`).join("")}</div>
+ <div class="notice" id="validation">Kiểm tra tổng điểm trước khi lưu.</div><div class="toolbar"><button class="btn primary" id="saveAdmin">Lưu cấu hình</button><button class="btn light" id="closeAdmin">Đóng quản trị</button><button class="btn light" id="restoreAdmin">Khôi phục cấu hình mặc định</button></div>`;
+ $("content").prepend(panel);
+ $("aVideoFile").addEventListener("change",e=>{let f=e.target.files[0];if(!f)return;localVideoUrl=URL.createObjectURL(f);$("videoPreview").innerHTML=`<video controls style="max-width:100%;max-height:180px" src="${localVideoUrl}"></video><p>Video từ máy đang xem được trong phiên này. Có thể không lưu được vào localStorage nếu file lớn.</p>`;panel.dataset.videoFile="1";panel._videoFile=f;});
+ panel.querySelectorAll("[data-upload-image]").forEach(inp=>inp.addEventListener("change",e=>{let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{panel.dataset["img_"+inp.dataset.uploadImage]=reader.result;$("preview-"+inp.dataset.uploadImage).innerHTML=`<img alt="Xem trước" style="max-width:180px;max-height:100px" src="${reader.result}">`};reader.readAsDataURL(f)}));
+ $("saveAdmin").onclick=()=>{
+  cfg.lesson=$("aLesson").value.trim()||DEFAULTS.lesson;cfg.subject=$("aSubject").value.trim();cfg.grade=$("aGrade").value.trim();cfg.content=$("aContent").value;
+  cfg.total=Number($("aTotal").value);
+  Object.keys(cfg.sections).forEach(k=>{cfg.sections[k].enabled=$("en-"+k).checked;cfg.sections[k].count=Math.max(0,Math.min(20,Number($("count-"+k).value)||0));cfg.sections[k].points=Math.max(0,Number($("points-"+k).value)||0)});
+  cfg.videoUrl=$("aVideoUrl").value.trim();
+  if(panel._videoFile){cfg.videoData=localVideoUrl;} // Object URL remains usable in current session.
+  cfg.images.forEach(im=>{let src=panel.dataset["img_"+im.id];if(src)im.src=src});
+  let sum=Object.values(cfg.sections).filter(s=>s.enabled).reduce((a,s)=>a+s.points,0);
+  if(Math.abs(sum-cfg.total)>.0001){$("validation").textContent=`CẢNH BÁO: Tổng điểm các phần đang bật là ${fmt(sum)}, nhưng tổng điểm toàn phiếu là ${fmt(cfg.total)}. Hãy điều chỉnh trước khi lưu.`;$("validation").style.background="#fee2e2";$("validation").style.color="#991b1b";return}
+  let saved=saveCfg();$("validation").textContent=saved?"Đã lưu cấu hình.":"Cấu hình áp dụng trong phiên hiện tại nhưng không lưu được đầy đủ vào localStorage (có thể do video/ảnh quá lớn).";$("validation").style.background="#dcfce7";$("validation").style.color="#166534";
+  render();$("adminPanel")?.remove();alert(saved?"Đã lưu cấu hình và cập nhật phiếu.":"Đã cập nhật phiếu trong phiên hiện tại; lưu trữ trình duyệt không đủ dung lượng.");
+ };
+ $("closeAdmin").onclick=()=>panel.remove();
+ $("restoreAdmin").onclick=()=>{if(confirm("Khôi phục toàn bộ cấu hình mặc định?")){cfg=clone(DEFAULTS);saveCfg();panel.remove();render()}};
+}
+$("adminOpen").addEventListener("click",openAdmin);
+$("resetBtn").addEventListener("click",()=>{if(confirm("Xóa câu trả lời và làm lại phiếu?")){render();$("result").style.display="none";document.querySelectorAll(".identity input").forEach(x=>x.value="");window.scrollTo({top:0,behavior:"smooth"})}});
+document.addEventListener("click",e=>{if(e.target?.id==="submitBtn")grade()});
+render();
+const submit=document.createElement("div");submit.className="toolbar";submit.innerHTML='<button class="btn primary" id="submitBtn" style="font-size:17px;padding:15px 22px">NỘP BÀI & CHẤM ĐIỂM</button>';document.querySelector(".memory").before(submit);
+</script></body></html>
